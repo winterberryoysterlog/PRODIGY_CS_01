@@ -1,0 +1,52 @@
+def caesar_encrypt(text, shift):
+    """Encrypts the text using Caesar Cipher with a given shift."""
+    encrypted_text = ""
+    
+    for char in text:
+        if char.isalpha():  # Check if the character is a letter
+            shift_amount = shift % 26
+            if char.islower():
+                start = ord('a')
+                encrypted_text += chr((ord(char) - start + shift_amount) % 26 + start)
+            elif char.isupper():
+                start = ord('A')
+                encrypted_text += chr((ord(char) - start + shift_amount) % 26 + start)
+        else:
+            encrypted_text += char  # Non-letter characters are added unchanged
+    
+    return encrypted_text
+
+def caesar_decrypt(text, shift):
+    """Decrypts the text using Caesar Cipher with a given shift."""
+    return caesar_encrypt(text, -shift)  # Decryption is just encryption with negative shift
+
+def main():
+    wanna_end = False
+    
+    while not wanna_end:
+        what_to_do = input("Type 'encrypt' for encryption, type 'decrypt' for decryption:\n").strip().lower()
+        text = input("Type your message:\n")
+        try:
+            shift = int(input("Enter shift key:\n"))
+        except ValueError:
+            print("Invalid shift value. Please enter an integer.")
+            continue
+        
+        if what_to_do == "encrypt":
+            result = caesar_encrypt(text, shift)
+            print(f"Encrypted message: {result}")
+        elif what_to_do == "decrypt":
+            result = caesar_decrypt(text, shift)
+            print(f"Decrypted message: {result}")
+        else:
+            print("Invalid choice. Please enter 'encrypt' or 'decrypt'.")
+            continue
+        
+        play_again = input("Type 'yes' to continue, type 'no' to exit.\n").strip().lower()
+        if play_again == 'no':
+            wanna_end = True
+    
+    print("Have a nice day! Bye..")
+
+if __name__ == "__main__":
+    main()
